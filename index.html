@@ -1,2 +1,164 @@
-<h1>Feeling good</h1>
-<p>Aditya is a sassy boy not kiran</p>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>DevSync – Dashboard</title>
+  <link rel="stylesheet" href="assets/css/style.css" />
+  <style>
+    :root {
+      --primary: orange;
+      --bg: #121212;
+      --card: #1e1e1e;
+      --text: #ffffff;
+      --muted: #999999;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      display: flex;
+      height: 100vh;
+    }
+
+    /* Sidebar */
+    .sidebar {
+      width: 220px;
+      background: #181818;
+      padding: 2rem 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.2rem;
+    }
+
+    .sidebar a {
+      text-decoration: none;
+      color: var(--muted);
+      font-weight: 500;
+      transition: 0.3s;
+    }
+
+    .sidebar a:hover {
+      color: var(--primary);
+    }
+
+    /* Main Content */
+    .main {
+      flex: 1;
+      padding: 2rem;
+    }
+
+    .header {
+      font-size: 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .card {
+      background: var(--card);
+      border-radius: 1rem;
+      padding: 1.5rem;
+      box-shadow: 0 0 8px rgba(255, 165, 0, 0.1);
+    }
+
+    .card h2 {
+      font-size: 2rem;
+      color: var(--primary);
+      margin: 0;
+    }
+
+    .card p {
+      margin-top: 0.5rem;
+      color: var(--muted);
+    }
+
+    .actions {
+      margin-top: 2rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .btn {
+      padding: 0.8rem 1.5rem;
+      background: var(--primary);
+      color: black;
+      font-weight: bold;
+      border: none;
+      border-radius: 0.5rem;
+      cursor: pointer;
+      text-decoration: none;
+    }
+
+    .btn:hover {
+      background: #ffb347;
+    }
+
+    @media (max-width: 768px) {
+      .sidebar {
+        display: none;
+      }
+
+      .main {
+        padding: 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Sidebar Navigation -->
+  <div class="sidebar">
+    <a href="dashboard.html">🏠 Dashboard</a>
+    <a href="bugs.html">🐞 Bug Tracker</a>
+    <a href="journal.html">📓 Dev Journal</a>
+    <a href="skills.html">📚 Skills</a>
+    <a href="commits.html">🔁 GitHub Commits</a>
+    <a href="portfolio.html">🎨 Portfolio</a>
+    <a href="reports.html">🧾 Reports</a>
+    <a href="settings.html">⚙ Settings</a>
+    <a href="billing.html">💳 Subscription</a>
+    <a href="login.html">🚪 Logout</a>
+  </div>
+
+  <!-- Main Content -->
+  <div class="main">
+    <div class="header">
+      Welcome, <strong>Developer</strong> 👋
+    </div>
+
+    <div class="grid">
+      <div class="card">
+        <h2>23</h2>
+        <p>Bugs Fixed</p>
+      </div>
+      <div class="card">
+        <h2>14</h2>
+        <p>Logs Written</p>
+      </div>
+      <div class="card">
+        <h2>5</h2>
+        <p>Skills Tracked</p>
+      </div>
+      <div class="card">
+        <h2>2</h2>
+        <p>Projects</p>
+      </div>
+    </div>
+
+    <div class="actions">
+      <a class="btn" href="journal.html">📝 Write Journal</a>
+      <a class="btn" href="bugs.html">🐞 Add Bug</a>
+      <a class="btn" href="portfolio.html">📂 View Portfolio</a>
+    </div>
+  </div>
+
+</body>
+</html>
