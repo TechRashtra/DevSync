@@ -2,17 +2,19 @@
 
 > *DevSync* is a premium developer-first SaaS platform designed to help engineers track their growth, manage daily dev logs, and publish professional portfolios — all in one ecosystem.  
 > Built with 💻 Java Spring Boot, 📱 Jetpack Compose, and 🌐 HTML/CSS, DevSync bridges productivity and portfolio into a single seamless tool.
+> 
+> 📄 **License**: See [LICENSE](LICENSE) for details.
 
 ---
 
 ## 🧠 Product Overview
 
-*DevSync empowers developers to:*
-- Log bugs, commits, goals, and daily work using clean interfaces
-- Track skill growth in DSA, projects, frameworks, and languages
-- Instantly generate and customize personal *developer portfolios* from templates
-- Export weekly/monthly productivity reports
-- Maintain visibility into career growth — and showcase it when needed
+**DevSync empowers developers to:**
+- 📝 Log bugs, commits, goals, and daily work using clean interfaces
+- 📈 Track skill growth in DSA, projects, frameworks, and languages
+- 🎨 Instantly generate and customize personal *developer portfolios* from templates
+- 📊 Export weekly/monthly productivity reports
+- 🚀 Maintain visibility into career growth — and showcase it when needed
 
 ---
 
@@ -46,7 +48,7 @@
 
 ### 📄 Report Generator
 - Export PDF summaries: Bugs fixed, goals achieved, commits made
-- Ideal for *internship reports, **placement prep*, or GitHub README
+- Ideal for *internship reports*, *placement prep*, or GitHub README
 
 ---
 
@@ -68,15 +70,18 @@
 
 ### 💻 Web Panel (HTML/CSS Only)
 
-- Dashboard  
-- Bug Tracker  
-- Daily Journal  
-- Learning Goals  
-- GitHub Parser  
-- Portfolio Templates  
-- PDF Reports  
-- Settings / Billing  
-- Logout  
+The web interface provides a clean, JavaScript-free experience with the following sections:
+- 🏠 Dashboard  
+- 🐞 Bug Tracker  
+- 📓 Daily Journal  
+- 🎯 Learning Goals  
+- 🔗 GitHub Parser  
+- 🎨 Portfolio Templates  
+- 📊 PDF Reports  
+- ⚙️ Settings / Billing  
+- 🚪 Logout
+
+> 🌐 **Demo Files**: Check out [index.html](index.html) and [login.html](login.html) for the current web interface implementation.  
 
 ---
 
@@ -90,16 +95,18 @@
 | Pro Monthly | ₹199/mo   | + Portfolio templates, PDF reports   |
 | Pro Yearly  | ₹1,999/yr | + All features, upcoming AI tools    |
 
+*Get started for free and upgrade when you're ready to unlock the full potential of DevSync!*
+
 > 💡 All billing managed securely via *Stripe Checkout* with webhook integration for license verification.
 
 ---
 
 ## 🔐 Security & Access Implementation
 
-- *Firebase Auth:* All users must sign in via Google or email
-- *Spring Boot Guarded APIs:* Use Firebase ID token in header
-- *Stripe Webhook Sync:* When payment is successful, set proUser = true in Firebase or internal DB
-- *Access Control:* UI and API routes verify if proUser === true before allowing:
+- 🔑 *Firebase Auth:* All users must sign in via Google or email
+- 🛡️ *Spring Boot Guarded APIs:* Use Firebase ID token in header
+- 💳 *Stripe Webhook Sync:* When payment is successful, set proUser = true in Firebase or internal DB
+- 🚪 *Access Control:* UI and API routes verify if proUser === true before allowing:
   - Access to portfolio editor
   - GitHub parser
   - PDF report generator
@@ -120,15 +127,15 @@
 
 ---
 
-## 🧱 Directory Structure (Internal Repo)
+## 🧱 Current Repository Structure
 
 ```bash
 DevSync/
-├── backend/           # Spring Boot APIs + Stripe + Auth
-├── android-app/       # Jetpack Compose App
-├── web/               # HTML/CSS dashboard and templates
-├── templates/         # Portfolio layout files
-├── stripe/            # Billing + Webhook handler
-├── firebase/          # Firebase config + Firestore rules
-├── docs/              # Business model, screenshots
-└── README.md
+├── index.html         # Main dashboard entry point
+├── login.html         # User authentication interface
+├── index.css          # Styling for web components
+├── LICENSE            # Project license information
+└── README.md          # This documentation file
+```
+
+> 📁 **Note**: This repository contains the frontend prototype. The full production structure will include additional directories for backend services, mobile app, and deployment configurations.
