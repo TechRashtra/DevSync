@@ -4,117 +4,43 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Login – DevSync</title>
-    <style>
-        :root {
-            --primary: orange;
-            --bg: #121212;
-            --card: #1e1e1e;
-            --text: #ffffff;
-            --muted: #999999;
-        }
-
-        body {
-            margin: 0;
-            padding: 0;
-            font-family: 'Segoe UI', sans-serif;
-            background: var(--bg);
-            color: var(--text);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-        }
-
-        .login-box {
-            background: var(--card);
-            padding: 2rem;
-            border-radius: 1rem;
-            box-shadow: 0 0 10px rgba(255, 165, 0, 0.2);
-            width: 100%;
-            max-width: 400px;
-        }
-
-        .login-box h2 {
-            text-align: center;
-            margin-bottom: 1.5rem;
-            color: var(--primary);
-        }
-
-        .form-group {
-            margin-bottom: 1rem;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 0.5rem;
-            color: var(--muted);
-        }
-
-        .form-group input {
-            width: 100%;
-            padding: 0.8rem;
-            border: none;
-            border-radius: 0.5rem;
-            background: #2a2a2a;
-            color: var(--text);
-        }
-
-        .form-group input:focus {
-            outline: 2px solid var(--primary);
-        }
-
-        .btn {
-            width: 100%;
-            padding: 0.8rem;
-            background: var(--primary);
-            color: black;
-            font-weight: bold;
-            border: none;
-            border-radius: 0.5rem;
-            cursor: pointer;
-            margin-top: 1rem;
-        }
-
-        .btn:hover {
-            background: #ffb347;
-        }
-
-        .bottom-text {
-            text-align: center;
-            margin-top: 1rem;
-            color: var(--muted);
-        }
-
-        .bottom-text a {
-            color: var(--primary);
-            text-decoration: none;
-        }
-    </style>
+    <title>TO_DO App</title>
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
-<body>
-
-    <div class="login-box">
-        <h2>Login to DevSync</h2>
-        <form action="#" method="POST">
-            <div class="form-group">
-                <label for="email">Email or Username</label>
-                <input type="text" id="email" name="email" required />
-            </div>
-
-            <div class="form-group">
-                <label for="password">Password</label>
-                <input type="password" id="password" name="password" required />
-            </div>
-
-            <button type="submit" class="btn">🔐 Login</button>
-        </form>
-        <div class="bottom-text">
-            Don't have an account? <a href="#">Register</a>
+<body class="bg-gray-100 h-screen flex items-center justify-center">
+    <div class="bg-white shadow-xl rounded p-8 w-full max-w-md">
+        <h1 class="text-2xl font-bold text-center mb-3">My Todo List</h1>
+        <div class="flex gap-2 mb-4">
+            <input type="text" id="taskinput" placeholder="Add a new task"
+                class="flex-grow p-2 border border-gray-400 rounded-lg" />
+            <button id="addbtn" class="bg-green-400 px-4 py-2 rounded-lg hover:bg-green-500">Add+</button>
         </div>
+        <ul id="tasklst" class="space-y-2"></ul>
     </div>
 
+    <script>
+        document.getElementById("addbtn").addEventListener("click", () => {
+            const taskText = document.getElementById("taskinput").value.trim();
+
+            if (taskText !== "") {
+                const li = document.createElement("li");
+                li.className = "flex justify-between items-center bg-gray-200 p-2 rounded";
+
+                li.innerHTML = `
+          <span>${taskText}</span>
+          <button class="bg-red-400 px-2 py-1 rounded hover:bg-red-500">Delete</button>
+        `;
+
+                li.querySelector("button").addEventListener("click", () => {
+                    li.remove();
+                });
+
+                document.getElementById("tasklst").appendChild(li);
+                document.getElementById("taskinput").value = "";
+            }
+        });
+    </script>
 </body>
 
-</html>-
+</html>
