@@ -1,19 +1,132 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>DevSync – Dashboard</title>
-  <link rel="stylesheet" href="index.css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Samudra Saathi Platform Details</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f4f7f9;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 800px;
+            margin: auto;
+            background-color: #ffffff;
+            padding: 25px 40px;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        }
+        h1, h2 {
+            color: #1a237e;
+            border-bottom: 2px solid #e0e0e0;
+            padding-bottom: 10px;
+        }
+        h1 {
+            text-align: center;
+            font-size: 2em;
+        }
+        h2 {
+            font-size: 1.5em;
+            margin-top: 30px;
+        }
+        ul {
+            list-style-type: disc;
+            padding-left: 20px;
+        }
+        li {
+            margin-bottom: 10px;
+        }
+        strong {
+            color: #0d47a1;
+        }
+        .section-block {
+            margin-bottom: 25px;
+        }
+        .ps-id {
+            background-color: #e8eaf6;
+            color: #1a237e;
+            padding: 10px 15px;
+            border-radius: 5px;
+            font-weight: bold;
+            display: inline-block;
+        }
+        .tech-stack {
+            background-color: #f1f8e9;
+            border-left: 5px solid #33691e;
+            padding: 15px;
+            margin-top: 15px;
+            font-family: "Courier New", Courier, monospace;
+        }
+        .signature {
+            margin-top: 40px;
+            text-align: right;
+            font-style: italic;
+            color: #555;
+        }
+    </style>
 </head>
 <body>
-  
-    <button class="btn" onclick="redirectToLogin()">Welcome</button>
 
-  <script>
-    function redirectToLogin() {
-      window.location.href = 'login.html';
-    }
-  </script>
+    <div class="container">
+
+        <h1>Samudra Saathi Platform Details</h1>
+
+        <div class="section-block">
+            <h2>PS ID</h2>
+            <p class="ps-id">SIH25039</p>
+        </div>
+
+        <div class="section-block">
+            <h2>Title</h2>
+            <p><strong>Samudra Saathi:</strong> A Crowdsourced Coastal Hazard Reporting & Analysis Platform</p>
+        </div>
+
+        <div class="section-block">
+            <h2>Description</h2>
+            <ul>
+                <li>A platform enabling <strong>citizens</strong> to report coastal hazards (like high waves, pollution, unusual activity) in real-time using a mobile/web app with photos, videos, and geotags.</li>
+                <li>It automatically <strong>monitors social media</strong> platforms for keywords and locations related to coastal incidents to capture public sentiment and early warnings.</li>
+                <li>An <strong>NLP & Analytics Engine</strong> processes all submitted data to classify reports, analyze sentiment, and automatically identify emerging "hotspots" of activity.</li>
+                <li>Provides a unified <strong>web dashboard for officials</strong> and analysts to visualize all data sources (citizen reports, social media trends, and official satellite data) on a single map.</li>
+                <li>Includes a <strong>proactive notification service</strong> that sends alerts (Push, SMS, Email) to relevant authorities when critical events are detected.</li>
+            </ul>
+        </div>
+
+        <div class="section-block">
+            <h2>Data Sources Needed</h2>
+            <ul>
+                <li><strong>Citizen Reports:</strong> Geotagged reports with media submitted via the app.</li>
+                <li><strong>Social Media:</strong> Public posts from platforms like Twitter, filtered by keywords and location.</li>
+                <li><strong>Government APIs:</strong>
+                    <ul>
+                        <li><strong>ISRO/MOSDAC:</strong> For programmatic access to INSAT satellite imagery (e.g., cloud cover, sea surface temperature, wind vectors) for verification and context.</li>
+                        <li><strong>IMD (India Meteorological Department):</strong> For official data on weather forecasts, cyclone warnings, and rainfall.</li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+
+        <div class="section-block">
+            <h2>Info to Gather from Government Organisations</h2>
+            <ul>
+                <li>Procedure and credentials for gaining <strong>API access to the MOSDAC</strong> (Meteorological and Oceanographic Satellite Data Archival Centre) portal to programmatically fetch INSAT satellite data products.</li>
+                <li>Documentation and access keys for <strong>IMD's public APIs</strong> to integrate official forecasts and warnings.</li>
+                <li>Information on using <strong>ISRO's Bhuvan geoplatform APIs</strong> for base maps and other relevant spatial data layers.</li>
+            </ul>
+        </div>
+        
+        <div class="section-block">
+            <h2>Possible Tech Stack</h2>
+            <div class="tech-stack">
+                Kotlin Mobile App + MERN stack (MongoDB, Express.js, React.js, Node.js) configured Projects.
+            </div>
+        </div>
+    </div>
+
 </body>
 </html>
