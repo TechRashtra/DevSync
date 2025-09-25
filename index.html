@@ -699,9 +699,9 @@
 </head>
 <body class="bg-gray-100 font-sans antialiased">
     <div id="app" x-data="hazardReporterApp()" x-init="init()" x-cloak>
-        <!-- Main Application UI -->
+        <!-- Main Application UI 
         <div x-show="auth.loggedIn" class="flex h-screen bg-gray-200">
-            <!-- Sidebar -->
+            <!-- Sidebar 
             <aside class="w-64 bg-gray-800 text-white flex flex-col">
                 <div class="p-4 border-b border-gray-700">
                     <h1 class="text-xl font-bold" x-text="i18n[lang].title"></h1>
@@ -735,9 +735,9 @@
                 </div>
             </aside>
 
-            <!-- Main Content -->
+            <!-- Main Content 
             <main class="flex-1 p-6 overflow-y-auto">
-                <!-- Citizen Report Form -->
+                <!-- Citizen Report Form 
                 <div x-show="page === 'report'">
                     <h2 class="text-2xl font-semibold text-gray-800" x-text="i18n[lang].reportPage.title"></h2>
                     <div class="mt-4 p-6 bg-white rounded-lg shadow">
@@ -787,7 +787,7 @@
                     </div>
                 </div>
 
-                <!-- Map Dashboard -->
+                <!-- Map Dashboard 
                 <div x-show="page === 'map'" class="h-full flex flex-col">
                     <div class="flex justify-between items-center mb-4">
                         <h2 class="text-2xl font-semibold text-gray-800" x-text="i18n[lang].mapPage.title"></h2>
@@ -805,7 +805,7 @@
                     <div id="map" class="flex-1 bg-white rounded-lg shadow"></div>
                 </div>
 
-                <!-- Social Feed -->
+                <!-- Social Feed 
                 <div x-show="page === 'social'">
                     <h2 class="text-2xl font-semibold text-gray-800" x-text="i18n[lang].socialPage.title"></h2>
                     <div class="mt-4 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
@@ -833,7 +833,7 @@
                     </div>
                 </div>
 
-                <!-- Admin Panel -->
+                <!-- Admin Panel 
                 <div x-show="page === 'admin' && auth.user.role !== 'Citizen'">
                     <h2 class="text-2xl font-semibold text-gray-800" x-text="i18n[lang].adminPage.title"></h2>
                     <div class="mt-4 bg-white rounded-lg shadow overflow-hidden">
@@ -867,7 +867,7 @@
                     </div>
                 </div>
                 
-                 <!-- Floating notification -->
+                 <!-- Floating notification 
                 <div x-show="notification.show" 
                     x-transition:enter="transform ease-out duration-300 transition"
                     x-transition:enter-start="translate-y-2 opacity-0 sm:translate-y-0 sm:translate-x-2"
