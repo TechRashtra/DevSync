@@ -3,6 +3,448 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Store Picklist Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .fade-in {
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        .slide-in-up {
+            animation: slideInUp 0.5s ease-in-out;
+        }
+        @keyframes slideInUp {
+            from { transform: translateY(20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        .progress-bar-animated {
+            transition: width 0.5s ease-in-out;
+        }
+    </style>
+</head>
+<body class="bg-gray-900 text-white flex h-screen">
+
+    <!-- Sidebar -->
+    <aside class="w-64 bg-gray-800 p-6 flex flex-col justify-between">
+        <div>
+            <div class="flex items-center mb-8">
+                <svg class="w-8 h-8 text-indigo-400 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                <h1 class="text-2xl font-bold">StoreFlow</h1>
+            </div>
+            <nav>
+                <ul>
+                    <li class="mb-4">
+                        <a href="#" class="flex items-center p-3 rounded-lg bg-gray-700 text-white">
+                            <svg class="w-6 h-6 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+                            Dashboard
+                        </a>
+                    </li>
+                    <li class="mb-4">
+                        <a href="#" class="flex items-center p-3 rounded-lg hover:bg-gray-700 transition">
+                            <svg class="w-6 h-6 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"></path></svg>
+                            Pick Lists
+                        </a>
+                    </li>
+                    <li class="mb-4">
+                        <a href="#" class="flex items-center p-3 rounded-lg hover:bg-gray-700 transition">
+                            <svg class="w-6 h-6 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 8v8m-3-5v5m-3-2v2m-3-7v7m-3-4v4m16-4v4m-3-5v5m-6-5v5m-3-2v2"></path></svg>
+                            Analytics
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="flex items-center p-3 rounded-lg hover:bg-gray-700 transition">
+                            <svg class="w-6 h-6 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                            Settings
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+        <div class="p-4 bg-gray-700 rounded-lg">
+            <h3 class="font-bold">Supervisor</h3>
+            <p class="text-sm text-gray-400">John Doe</p>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="flex-1 p-8 overflow-y-auto">
+        <header class="flex justify-between items-center mb-8">
+            <h2 class="text-3xl font-bold">Warehouse Picking Dashboard</h2>
+            <div class="flex items-center space-x-4">
+                <button id="addPickListBtn" class="bg-indigo-500 hover:bg-indigo-600 text-white font-bold py-2 px-4 rounded-lg transition">
+                    Add New Pick List
+                </button>
+                <div class="relative">
+                    <input type="text" placeholder="Search Pick Lists..." class="bg-gray-800 rounded-full py-2 px-4 pl-10 focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                    <svg class="w-5 h-5 absolute left-3 top-2.5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                </div>
+            </div>
+        </header>
+
+        <!-- Stats and Chart -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
+            <div class="bg-gray-800 p-6 rounded-lg slide-in-up">
+                <h3 class="text-gray-400 text-lg">Total Pending</h3>
+                <p id="pending-count" class="text-4xl font-bold">0</p>
+            </div>
+            <div class="bg-gray-800 p-6 rounded-lg slide-in-up" style="animation-delay: 0.1s;">
+                <h3 class="text-gray-400 text-lg">Total Completed</h3>
+                <p id="completed-count" class="text-4xl font-bold text-green-400">0</p>
+            </div>
+            <div class="bg-gray-800 p-6 rounded-lg slide-in-up" style="animation-delay: 0.2s;">
+                <h3 class="text-gray-400 text-lg">Picking Progress</h3>
+                <div class="w-full bg-gray-700 rounded-full h-4 mt-4">
+                    <div id="overall-progress" class="bg-green-500 h-4 rounded-full progress-bar-animated" style="width: 0%"></div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <!-- Pending Pick Lists -->
+            <div class="lg:col-span-2 bg-gray-800 p-6 rounded-lg">
+                <h3 class="text-xl font-bold mb-4">Pending Pick Lists</h3>
+                <div id="pending-pick-lists" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <!-- Pick list cards will be injected here -->
+                </div>
+            </div>
+            
+            <!-- Summary / Completed -->
+            <div class="bg-gray-800 p-6 rounded-lg">
+                <h3 class="text-xl font-bold mb-4">Summary</h3>
+                <canvas id="progressChart" class="mb-6"></canvas>
+                <h3 class="text-xl font-bold mb-4 mt-8">Recently Completed</h3>
+                <div id="completed-pick-lists" class="space-y-4">
+                     <!-- Completed list items will be injected here -->
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Modal for Detailed Pick List View -->
+    <div id="pickListModal" class="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center hidden z-50 fade-in">
+        <div class="bg-gray-800 rounded-lg p-8 w-full max-w-3xl slide-in-up">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-2xl font-bold" id="modal-title">Pick List Details</h2>
+                <button id="closeModalBtn" class="text-gray-400 hover:text-white">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                </button>
+            </div>
+            <div id="modal-content">
+                <!-- Detailed content will be injected here -->
+            </div>
+            <div class="mt-8 flex justify-end">
+                <button id="completePickListBtn" class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-6 rounded-lg transition disabled:bg-gray-600" disabled>
+                    Mark as Complete
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="fixed bottom-10 right-10 bg-green-500 text-white py-3 px-6 rounded-lg shadow-lg hidden fade-in">
+        <p id="toast-message"></p>
+    </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const pendingPickListsContainer = document.getElementById('pending-pick-lists');
+        const completedPickListsContainer = document.getElementById('completed-pick-lists');
+        const pendingCountEl = document.getElementById('pending-count');
+        const completedCountEl = document.getElementById('completed-count');
+        const overallProgressEl = document.getElementById('overall-progress');
+        const addPickListBtn = document.getElementById('addPickListBtn');
+
+        // Modal elements
+        const modal = document.getElementById('pickListModal');
+        const closeModalBtn = document.getElementById('closeModalBtn');
+        const modalTitle = document.getElementById('modal-title');
+        const modalContent = document.getElementById('modal-content');
+        const completePickListBtn = document.getElementById('completePickListBtn');
+        
+        // Toast elements
+        const toast = document.getElementById('toast');
+        const toastMessage = document.getElementById('toast-message');
+
+        let pickLists = [
+            { id: 1, title: 'PL-001', line: 'Production Line A', items: [
+                { name: 'Material X', tray: 'T-101', rack: 'R1-A', picked: false },
+                { name: 'Material Y', tray: 'T-102', rack: 'R1-B', picked: false },
+                { name: 'Material Z', tray: 'T-103', rack: 'R2-C', picked: false },
+            ], status: 'pending' },
+            { id: 2, title: 'PL-002', line: 'Production Line B', items: [
+                { name: 'Material A', tray: 'T-201', rack: 'R1-C', picked: false },
+                { name: 'Material B', tray: 'T-202', rack: 'R3-A', picked: false },
+            ], status: 'pending' },
+            { id: 3, title: 'PL-003', line: 'Production Line A', items: [
+                { name: 'Material C', tray: 'T-301', rack: 'R2-B', picked: false },
+                { name: 'Material D', tray: 'T-302', rack: 'R4-A', picked: false },
+                { name: 'Material E', tray: 'T-303', rack: 'R4-B', picked: false },
+                { name: 'Material F', tray: 'T-304', rack: 'R4-C', picked: false },
+            ], status: 'pending' },
+            { id: 4, title: 'PL-004', line: 'Production Line C', items: [
+                { name: 'Material G', tray: 'T-401', rack: 'R3-B', picked: false },
+            ], status: 'pending' }
+        ];
+
+        let chart;
+
+        function renderPickLists() {
+            pendingPickListsContainer.innerHTML = '';
+            completedPickListsContainer.innerHTML = '';
+
+            const pending = pickLists.filter(pl => pl.status === 'pending');
+            const completed = pickLists.filter(pl => pl.status === 'completed').slice(-5).reverse();
+
+            pending.forEach(pl => {
+                const pickedCount = pl.items.filter(item => item.picked).length;
+                const progress = (pickedCount / pl.items.length) * 100;
+
+                const card = `
+                    <div class="bg-gray-700 p-5 rounded-lg shadow-md cursor-pointer hover:bg-gray-600 transition slide-in-up" data-id="${pl.id}">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <h4 class="font-bold text-lg">${pl.title}</h4>
+                                <p class="text-sm text-gray-400">${pl.line}</p>
+                            </div>
+                            <span class="bg-yellow-500 text-yellow-900 text-xs font-semibold px-2.5 py-1 rounded-full">Pending</span>
+                        </div>
+                        <div class="mt-4">
+                            <p class="text-sm text-gray-300 mb-2">${pickedCount} of ${pl.items.length} items picked</p>
+                            <div class="w-full bg-gray-600 rounded-full h-2.5">
+                                <div class="bg-indigo-500 h-2.5 rounded-full progress-bar-animated" style="width: ${progress}%"></div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                pendingPickListsContainer.innerHTML += card;
+            });
+
+            if (pending.length === 0) {
+                 pendingPickListsContainer.innerHTML = `<p class="text-center text-gray-400 col-span-2">No pending pick lists.</p>`;
+            }
+            
+            completed.forEach(pl => {
+                const item = `
+                    <div class="flex items-center justify-between p-3 bg-gray-700 rounded-lg fade-in">
+                        <div class="flex items-center">
+                            <div class="bg-green-500 rounded-full p-2 mr-4">
+                               <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                            </div>
+                            <div>
+                                <p class="font-semibold">${pl.title}</p>
+                                <p class="text-sm text-gray-400">Completed for ${pl.line}</p>
+                            </div>
+                        </div>
+                        <span class="text-sm text-gray-500">Just now</span>
+                    </div>
+                `;
+                completedPickListsContainer.innerHTML += item;
+            });
+            
+            if (completed.length === 0) {
+                completedPickListsContainer.innerHTML = `<p class="text-center text-gray-500">No completed lists yet.</p>`;
+            }
+
+            updateStats();
+            addCardEventListeners();
+        }
+
+        function updateStats() {
+            const pending = pickLists.filter(pl => pl.status === 'pending').length;
+            const completed = pickLists.filter(pl => pl.status === 'completed').length;
+            const total = pickLists.length;
+
+            pendingCountEl.textContent = pending;
+            completedCountEl.textContent = completed;
+            
+            const progress = total > 0 ? (completed / total) * 100 : 0;
+            overallProgressEl.style.width = `${progress}%`;
+
+            updateChart(pending, completed);
+        }
+
+        function updateChart(pending, completed) {
+            const data = {
+                labels: ['Pending', 'Completed'],
+                datasets: [{
+                    label: 'Pick Lists',
+                    data: [pending, completed],
+                    backgroundColor: [
+                        'rgba(255, 159, 64, 0.7)',
+                        'rgba(75, 192, 192, 0.7)'
+                    ],
+                    borderColor: [
+                        'rgba(255, 159, 64, 1)',
+                        'rgba(75, 192, 192, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            };
+
+            if (chart) {
+                chart.data.datasets[0].data = [pending, completed];
+                chart.update();
+            } else {
+                 const ctx = document.getElementById('progressChart').getContext('2d');
+                 chart = new Chart(ctx, {
+                    type: 'doughnut',
+                    data: data,
+                    options: {
+                        responsive: true,
+                        plugins: {
+                            legend: {
+                                position: 'top',
+                                labels: {
+                                    color: 'white'
+                                }
+                            },
+                        }
+                    },
+                });
+            }
+        }
+
+        function addCardEventListeners() {
+            document.querySelectorAll('[data-id]').forEach(card => {
+                card.addEventListener('click', () => {
+                    const id = card.getAttribute('data-id');
+                    openModal(parseInt(id));
+                });
+            });
+        }
+        
+        function openModal(id) {
+            const pickList = pickLists.find(pl => pl.id === id);
+            if (!pickList) return;
+
+            modalTitle.textContent = `${pickList.title} - ${pickList.line}`;
+            
+            modalContent.innerHTML = `
+                <div class="space-y-4 max-h-96 overflow-y-auto pr-4">
+                ${pickList.items.map((item, index) => `
+                    <div class="flex items-center justify-between p-4 rounded-lg ${item.picked ? 'bg-green-900' : 'bg-gray-700'}">
+                        <div>
+                            <p class="font-bold text-lg">${item.name}</p>
+                            <p class="text-sm text-gray-400">Tray: ${item.tray} | Rack: ${item.rack}</p>
+                        </div>
+                        <button class="toggle-pick-btn ${item.picked ? 'bg-gray-600' : 'bg-indigo-500 hover:bg-indigo-600'} text-white font-bold py-2 px-4 rounded-lg transition" data-item-index="${index}">
+                            ${item.picked ? 'Un-pick' : 'Pick'}
+                        </button>
+                    </div>
+                `).join('')}
+                </div>
+            `;
+
+            completePickListBtn.dataset.id = id;
+            updateCompleteButtonState(pickList);
+            modal.classList.remove('hidden');
+
+            // Add event listeners to new buttons
+            modal.querySelectorAll('.toggle-pick-btn').forEach(button => {
+                button.addEventListener('click', () => {
+                    const itemIndex = parseInt(button.dataset.itemIndex);
+                    toggleItemPick(id, itemIndex);
+                });
+            });
+        }
+        
+        function closeModal() {
+            modal.classList.add('hidden');
+        }
+
+        function toggleItemPick(pickListId, itemIndex) {
+            const pickList = pickLists.find(pl => pl.id === pickListId);
+            if(pickList) {
+                pickList.items[itemIndex].picked = !pickList.items[itemIndex].picked;
+                openModal(pickListId); // Re-render modal content
+                renderPickLists(); // Re-render main dashboard
+            }
+        }
+        
+        function updateCompleteButtonState(pickList) {
+            const allPicked = pickList.items.every(item => item.picked);
+            completePickListBtn.disabled = !allPicked;
+        }
+
+        closeModalBtn.addEventListener('click', closeModal);
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                closeModal();
+            }
+        });
+
+        completePickListBtn.addEventListener('click', () => {
+            const id = parseInt(completePickListBtn.dataset.id);
+            const pickList = pickLists.find(pl => pl.id === id);
+            if (pickList && pickList.items.every(item => item.picked)) {
+                pickList.status = 'completed';
+                closeModal();
+                renderPickLists();
+                showToast(`Pick List ${pickList.title} completed!`);
+            }
+        });
+        
+        addPickListBtn.addEventListener('click', () => {
+            const newId = Math.max(...pickLists.map(p => p.id), 0) + 1;
+            const lines = ['Production Line A', 'Production Line B', 'Production Line C'];
+            const materials = ['Alpha', 'Beta', 'Gamma', 'Delta', 'Epsilon'];
+            
+            const newItemCount = Math.floor(Math.random() * 4) + 1;
+            const newItems = [];
+            for(let i=0; i<newItemCount; i++) {
+                newItems.push({
+                    name: `Material ${materials[Math.floor(Math.random() * materials.length)]}`,
+                    tray: `T-${Math.floor(Math.random() * 899) + 100}`,
+                    rack: `R${Math.floor(Math.random() * 4) + 1}-${String.fromCharCode(65 + Math.floor(Math.random() * 3))}`,
+                    picked: false
+                });
+            }
+
+            const newPickList = {
+                id: newId,
+                title: `PL-${String(newId).padStart(3, '0')}`,
+                line: lines[Math.floor(Math.random() * lines.length)],
+                items: newItems,
+                status: 'pending'
+            };
+            pickLists.push(newPickList);
+            renderPickLists();
+            showToast(`New Pick List ${newPickList.title} added.`);
+        });
+
+        function showToast(message) {
+            toastMessage.textContent = message;
+            toast.classList.remove('hidden');
+            setTimeout(() => {
+                toast.classList.add('hidden');
+            }, 3000);
+        }
+
+        renderPickLists();
+    });
+</script>
+</body>
+</html>
+
+
+
+
+
+
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>INCOIS Hazard Reporter</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
@@ -461,4 +903,4 @@
     </div>
 </body>
 </html>
-
+ -->
