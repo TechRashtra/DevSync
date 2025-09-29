@@ -3,904 +3,342 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Store Picklist Dashboard</title>
+    <title>Project Samudra Sachet | The AI-Powered Coastal Guardian</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: Energetic & Playful -->
+    <!-- Application Structure Plan: The infographic follows a narrative structure designed to guide the user from understanding the core problem to appreciating the solution's impact. The flow is: 1. Hero Section (Hook), 2. The Problem (Context), 3. Our Solution (Value Proposition), 4. How It Works (Technical Deep-Dive), 5. Data Insights (Demonstration of Output), 6. Core Features (Functionality), 7. Technology Stack (Foundation), 8. Feasibility (Risk Mitigation), and 9. Impact (Conclusion). This thematic, top-down structure was chosen over a direct mirror of the README to build a compelling story, making the complex technical details more digestible for a judging audience. It starts broad, dives deep into the architecture and features, and zooms back out to the high-level impact. -->
+    <!-- Visualization & Content Choices: 
+        - The Problem: Goal: Inform. Method: Styled HTML/CSS to visually represent the 'information gap' between official sources and citizens, which is more effective than a simple text block.
+        - 5-Layer Architecture: Goal: Organize. Method: A custom flowchart built with HTML/CSS (Flexbox and Borders). This avoids prohibited SVG/MermaidJS while providing a clear visual representation of the data flow, which is crucial for understanding the system's logic.
+        - Data Insights (Charts): Goal: Compare/Change/Relationships. Method: Three Chart.js canvas charts (Donut, Line, Bar) are used to visualize the *type* of analytics the platform would generate (e.g., hazard distribution, report volume during an event, trust score analysis). This demonstrates the platform's analytical power.
+        - Features & Tech Stack: Goal: Compare/Inform. Method: Styled cards with Unicode icons in a grid layout. This is more visually engaging and scannable than a standard HTML table.
+        - Impact: Goal: Inform. Method: Large Unicode icons and bold text in cards to make the key benefits memorable and impactful.
+    -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
     <style>
         body {
             font-family: 'Inter', sans-serif;
+            background-color: #F7F7F7;
         }
-        .fade-in {
-            animation: fadeIn 0.5s ease-in-out;
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 300px;
+            max-height: 400px;
         }
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 350px;
+            }
         }
-        .slide-in-up {
-            animation: slideInUp 0.5s ease-in-out;
+        .flow-arrow {
+            font-size: 2rem;
+            line-height: 1;
+            color: #4A4A4A;
+            transform: rotate(90deg);
         }
-        @keyframes slideInUp {
-            from { transform: translateY(20px); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
-        }
-        .progress-bar-animated {
-            transition: width 0.5s ease-in-out;
+        @media (min-width: 1024px) {
+            .flow-arrow {
+                transform: rotate(0deg);
+            }
         }
     </style>
 </head>
-<body class="bg-gray-900 text-white flex h-screen">
+<body class="text-gray-800">
 
-    <!-- Sidebar -->
-    <aside class="w-64 bg-gray-800 p-6 flex flex-col justify-between">
-        <div>
-            <div class="flex items-center mb-8">
-                <svg class="w-8 h-8 text-indigo-400 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
-                <h1 class="text-2xl font-bold">StoreFlow</h1>
-            </div>
-            <nav>
-                <ul>
-                    <li class="mb-4">
-                        <a href="#" class="flex items-center p-3 rounded-lg bg-gray-700 text-white">
-                            <svg class="w-6 h-6 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
-                            Dashboard
-                        </a>
-                    </li>
-                    <li class="mb-4">
-                        <a href="#" class="flex items-center p-3 rounded-lg hover:bg-gray-700 transition">
-                            <svg class="w-6 h-6 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"></path></svg>
-                            Pick Lists
-                        </a>
-                    </li>
-                    <li class="mb-4">
-                        <a href="#" class="flex items-center p-3 rounded-lg hover:bg-gray-700 transition">
-                            <svg class="w-6 h-6 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 8v8m-3-5v5m-3-2v2m-3-7v7m-3-4v4m16-4v4m-3-5v5m-6-5v5m-3-2v2"></path></svg>
-                            Analytics
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#" class="flex items-center p-3 rounded-lg hover:bg-gray-700 transition">
-                            <svg class="w-6 h-6 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
-                            Settings
-                        </a>
-                    </li>
-                </ul>
-            </nav>
-        </div>
-        <div class="p-4 bg-gray-700 rounded-lg">
-            <h3 class="font-bold">Supervisor</h3>
-            <p class="text-sm text-gray-400">John Doe</p>
-        </div>
-    </aside>
+    <div class="container mx-auto p-4 md:p-8 max-w-7xl">
 
-    <!-- Main Content -->
-    <main class="flex-1 p-8 overflow-y-auto">
-        <header class="flex justify-between items-center mb-8">
-            <h2 class="text-3xl font-bold">Warehouse Picking Dashboard</h2>
-            <div class="flex items-center space-x-4">
-                <button id="addPickListBtn" class="bg-indigo-500 hover:bg-indigo-600 text-white font-bold py-2 px-4 rounded-lg transition">
-                    Add New Pick List
-                </button>
-                <div class="relative">
-                    <input type="text" placeholder="Search Pick Lists..." class="bg-gray-800 rounded-full py-2 px-4 pl-10 focus:outline-none focus:ring-2 focus:ring-indigo-500">
-                    <svg class="w-5 h-5 absolute left-3 top-2.5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
-                </div>
-            </div>
+        <header class="text-center py-12">
+            <h1 class="text-4xl md:text-6xl font-bold text-[#0D47A1]">Project Samudra Sachet</h1>
+            <p class="text-lg md:text-2xl mt-4 text-[#FF6F61]">The AI-Powered Coastal Guardian</p>
+            <p class="max-w-3xl mx-auto mt-6 text-gray-600">
+                An integrated platform for INCOIS that intelligently fuses crowdsourced citizen reports and real-time social media analytics to revolutionize ocean hazard warnings and coastal safety.
+            </p>
         </header>
 
-        <!-- Stats and Chart -->
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
-            <div class="bg-gray-800 p-6 rounded-lg slide-in-up">
-                <h3 class="text-gray-400 text-lg">Total Pending</h3>
-                <p id="pending-count" class="text-4xl font-bold">0</p>
-            </div>
-            <div class="bg-gray-800 p-6 rounded-lg slide-in-up" style="animation-delay: 0.1s;">
-                <h3 class="text-gray-400 text-lg">Total Completed</h3>
-                <p id="completed-count" class="text-4xl font-bold text-green-400">0</p>
-            </div>
-            <div class="bg-gray-800 p-6 rounded-lg slide-in-up" style="animation-delay: 0.2s;">
-                <h3 class="text-gray-400 text-lg">Picking Progress</h3>
-                <div class="w-full bg-gray-700 rounded-full h-4 mt-4">
-                    <div id="overall-progress" class="bg-green-500 h-4 rounded-full progress-bar-animated" style="width: 0%"></div>
+        <main>
+            <section id="problem" class="mb-20">
+                <h2 class="text-3xl font-bold text-center mb-10">The Critical Information Gap</h2>
+                <div class="bg-white rounded-xl shadow-lg p-8 grid grid-cols-1 md:grid-cols-3 items-center gap-8">
+                    <div class="text-center">
+                        <div class="text-6xl mb-4">🛰️</div>
+                        <h3 class="text-xl font-semibold text-[#0D47A1]">Official Forecasts</h3>
+                        <p class="text-gray-600 mt-2">INCOIS provides vital warnings based on satellite and sensor data.</p>
+                    </div>
+                    <div class="text-center text-red-500">
+                         <div class="text-5xl font-extrabold p-4 rounded-full">...GAP...</div>
+                         <p class="font-semibold mt-2">Lack of Real-Time Ground Truth</p>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-6xl mb-4">👨‍👩‍👧‍👦</div>
+                        <h3 class="text-xl font-semibold text-[#0D47A1]">Coastal Communities</h3>
+                        <p class="text-gray-600 mt-2">First-hand observations are delayed, fragmented, or lost.</p>
+                    </div>
                 </div>
-            </div>
-        </div>
-        
-        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-            <!-- Pending Pick Lists -->
-            <div class="lg:col-span-2 bg-gray-800 p-6 rounded-lg">
-                <h3 class="text-xl font-bold mb-4">Pending Pick Lists</h3>
-                <div id="pending-pick-lists" class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <!-- Pick list cards will be injected here -->
+            </section>
+
+            <section id="solution" class="mb-20">
+                <h2 class="text-3xl font-bold text-center mb-10">Our Solution: A Unified Ecosystem</h2>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div class="bg-white rounded-xl shadow-lg p-6 text-center hover:shadow-2xl transition-shadow duration-300">
+                        <div class="text-5xl mb-4 text-[#FF6F61]">🧠</div>
+                        <h3 class="text-xl font-bold mb-2 text-[#0D47A1]">Hybrid Intelligence Engine</h3>
+                        <p class="text-gray-600">Fuses AI-driven social media analysis with human-verified citizen reports for a complete, reliable view of any coastal event.</p>
+                    </div>
+                    <div class="bg-white rounded-xl shadow-lg p-6 text-center hover:shadow-2xl transition-shadow duration-300">
+                        <div class="text-5xl mb-4 text-[#FF6F61]">🛡️</div>
+                        <h3 class="text-xl font-bold mb-2 text-[#0D47A1]">Dynamic Trust Scoring</h3>
+                        <p class="text-gray-600">Combats misinformation by automatically assigning a trust score to every report based on reputation, location, and cross-correlation.</p>
+                    </div>
+                    <div class="bg-white rounded-xl shadow-lg p-6 text-center hover:shadow-2xl transition-shadow duration-300">
+                        <div class="text-5xl mb-4 text-[#FF6F61]">📴</div>
+                        <h3 class="text-xl font-bold mb-2 text-[#0D47A1]">Offline-First for the Last Mile</h3>
+                        <p class="text-gray-600">Ensures critical data is never lost. The mobile app is fully functional offline, syncing reports automatically when connectivity returns.</p>
+                    </div>
                 </div>
-            </div>
+            </section>
             
-            <!-- Summary / Completed -->
-            <div class="bg-gray-800 p-6 rounded-lg">
-                <h3 class="text-xl font-bold mb-4">Summary</h3>
-                <canvas id="progressChart" class="mb-6"></canvas>
-                <h3 class="text-xl font-bold mb-4 mt-8">Recently Completed</h3>
-                <div id="completed-pick-lists" class="space-y-4">
-                     <!-- Completed list items will be injected here -->
+            <section id="architecture" class="mb-20">
+                <h2 class="text-3xl font-bold text-center mb-12">How It Works: The 5-Layer Architecture</h2>
+                <div class="flex flex-col lg:flex-row items-center justify-center gap-4 lg:gap-0">
+                    <div class="bg-white border-t-8 border-[#0D47A1] rounded-xl shadow-lg p-4 w-64 h-48 flex flex-col justify-center items-center text-center">
+                        <p class="text-3xl mb-2">📱</p><h3 class="font-bold text-lg">1. Citizen Layer</h3><p class="text-sm text-gray-600">Offline-capable mobile app for simple, geotagged reporting.</p>
+                    </div>
+                    <div class="flow-arrow">➔</div>
+                    <div class="bg-white border-t-8 border-[#FF6F61] rounded-xl shadow-lg p-4 w-64 h-48 flex flex-col justify-center items-center text-center">
+                        <p class="text-3xl mb-2">📥</p><h3 class="font-bold text-lg">2. Ingestion Layer</h3><p class="text-sm text-gray-600">Centralized funnel for citizen reports and social media feeds.</p>
+                    </div>
+                    <div class="flow-arrow">➔</div>
+                    <div class="bg-white border-t-8 border-[#4A4A4A] rounded-xl shadow-lg p-4 w-64 h-48 flex flex-col justify-center items-center text-center">
+                        <p class="text-3xl mb-2">🔬</p><h3 class="font-bold text-lg">3. Analysis Layer</h3><p class="text-sm text-gray-600">The Brain: Multilingual NLP, media verification, and trust scoring.</p>
+                    </div>
+                    <div class="flow-arrow">➔</div>
+                    <div class="bg-white border-t-8 border-[#0D47A1] rounded-xl shadow-lg p-4 w-64 h-48 flex flex-col justify-center items-center text-center">
+                        <p class="text-3xl mb-2">📊</p><h3 class="font-bold text-lg">4. Visualization Layer</h3><p class="text-sm text-gray-600">INCOIS dashboard with interactive maps and heatmaps.</p>
+                    </div>
+                    <div class="flow-arrow">➔</div>
+                    <div class="bg-white border-t-8 border-[#FF6F61] rounded-xl shadow-lg p-4 w-64 h-48 flex flex-col justify-center items-center text-center">
+                        <p class="text-3xl mb-2">📢</p><h3 class="font-bold text-lg">5. Response Layer</h3><p class="text-sm text-gray-600">Targeted, localized alert generation and system integration.</p>
+                    </div>
                 </div>
-            </div>
-        </div>
+            </section>
 
-    </main>
+            <section id="insights" class="mb-20">
+                <h2 class="text-3xl font-bold text-center mb-10">Generating Actionable Insights</h2>
+                 <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                    <div class="bg-white rounded-xl shadow-lg p-6">
+                        <h3 class="text-xl font-bold mb-4 text-center">Hazard Type Distribution</h3>
+                        <div class="chart-container"><canvas id="hazardDonutChart"></canvas></div>
+                        <p class="text-center text-sm text-gray-600 mt-4">Instantly see the breakdown of reported incidents to understand the nature of an event.</p>
+                    </div>
+                     <div class="bg-white rounded-xl shadow-lg p-6">
+                        <h3 class="text-xl font-bold mb-4 text-center">Report Volume Over Time</h3>
+                        <div class="chart-container"><canvas id="reportLineChart"></canvas></div>
+                        <p class="text-center text-sm text-gray-600 mt-4">Track the velocity of incoming reports to identify escalating situations in near real-time.</p>
+                    </div>
+                    <div class="bg-white rounded-xl shadow-lg p-6">
+                        <h3 class="text-xl font-bold mb-4 text-center">Report Trust Score Analysis</h3>
+                        <div class="chart-container"><canvas id="trustBarChart"></canvas></div>
+                        <p class="text-center text-sm text-gray-600 mt-4">Focus response efforts by visualizing the quality and reliability of incoming data streams.</p>
+                    </div>
+                </div>
+            </section>
+            
+            <section id="features" class="mb-20">
+                <h2 class="text-3xl font-bold text-center mb-10">Core Platform Features</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div class="bg-white rounded-xl shadow-lg p-8">
+                        <h3 class="text-2xl font-bold text-[#0D47A1] mb-6 text-center">📱 Citizen Mobile App</h3>
+                        <ul class="space-y-4 text-gray-700">
+                            <li class="flex items-start"><span class="text-2xl mr-3 text-[#FF6F61]">👆</span><div><strong>Simple, One-Click Reporting:</strong> Easily submit hazard reports with photos and video.</div></li>
+                            <li class="flex items-start"><span class="text-2xl mr-3 text-[#FF6F61]">🌍</span><div><strong>Automatic Geotagging:</strong> Location and time are captured automatically for accuracy.</div></li>
+                            <li class="flex items-start"><span class="text-2xl mr-3 text-[#FF6F61]">📴</span><div><strong>Full Offline Functionality:</strong> Reports are saved locally and synced automatically when online.</div></li>
+                            <li class="flex items-start"><span class="text-2xl mr-3 text-[#FF6F61]">🔔</span><div><strong>Targeted Safety Alerts:</strong> Receive official warnings relevant to your specific location.</div></li>
+                        </ul>
+                    </div>
+                    <div class="bg-white rounded-xl shadow-lg p-8">
+                        <h3 class="text-2xl font-bold text-[#0D47A1] mb-6 text-center">🖥️ INCOIS Web Dashboard</h3>
+                        <ul class="space-y-4 text-gray-700">
+                            <li class="flex items-start"><span class="text-2xl mr-3 text-[#4A4A4A]">🗺️</span><div><strong>Real-Time Unified Map:</strong> Visualize citizen reports and social media hotspots in one view.</div></li>
+                            <li class="flex items-start"><span class="text-2xl mr-3 text-[#4A4A4A]">✅</span><div><strong>Verification Workflow:</strong> Admins can review, verify, and escalate reports with a single click.</div></li>
+                            <li class="flex items-start"><span class="text-2xl mr-3 text-[#4A4A4A]">📈</span><div><strong>Advanced Analytics:</strong> Track trends, monitor sentiment, and generate post-event reports.</div></li>
+                            <li class="flex items-start"><span class="text-2xl mr-3 text-[#4A4A4A]">📢</span><div><strong>Geo-Targeted Alerting:</strong> Draw an area on the map to send alerts to affected citizens instantly.</div></li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
 
-    <!-- Modal for Detailed Pick List View -->
-    <div id="pickListModal" class="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center hidden z-50 fade-in">
-        <div class="bg-gray-800 rounded-lg p-8 w-full max-w-3xl slide-in-up">
-            <div class="flex justify-between items-center mb-6">
-                <h2 class="text-2xl font-bold" id="modal-title">Pick List Details</h2>
-                <button id="closeModalBtn" class="text-gray-400 hover:text-white">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
-                </button>
-            </div>
-            <div id="modal-content">
-                <!-- Detailed content will be injected here -->
-            </div>
-            <div class="mt-8 flex justify-end">
-                <button id="completePickListBtn" class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-6 rounded-lg transition disabled:bg-gray-600" disabled>
-                    Mark as Complete
-                </button>
-            </div>
-        </div>
+            <section id="techstack" class="mb-20 bg-white rounded-xl shadow-lg p-8">
+                <h2 class="text-3xl font-bold text-center mb-10">Technology Stack</h2>
+                <div class="flex flex-wrap justify-center gap-8 text-center">
+                    <div class="w-36"><div class="text-4xl">📱</div><p class="font-semibold mt-2">Flutter / Kotlin</p><p class="text-sm text-gray-500">Mobile App</p></div>
+                    <div class="w-36"><div class="text-4xl">⚙️</div><p class="font-semibold mt-2">Node.js</p><p class="text-sm text-gray-500">Backend</p></div>
+                    <div class="w-36"><div class="text-4xl">🗃️</div><p class="font-semibold mt-2">MongoDB</p><p class="text-sm text-gray-500">Database</p></div>
+                    <div class="w-36"><div class="text-4xl">🗺️</div><p class="font-semibold mt-2">Mapbox API</p><p class="text-sm text-gray-500">GIS & Mapping</p></div>
+                    <div class="w-36"><div class="text-4xl">🤖</div><p class="font-semibold mt-2">Python & IndicBERT</p><p class="text-sm text-gray-500">AI / ML</p></div>
+                    <div class="w-36"><div class="text-4xl">☁️</div><p class="font-semibold mt-2">GCP / AWS</p><p class="text-sm text-gray-500">Deployment</p></div>
+                </div>
+            </section>
+
+            <section id="feasibility" class="mb-20">
+                <h2 class="text-3xl font-bold text-center mb-10">Addressing Key Challenges</h2>
+                <div class="space-y-6 max-w-4xl mx-auto">
+                    <div>
+                        <h3 class="text-lg font-semibold text-[#0D47A1]">Challenge: Data Quality & Misinformation</h3>
+                        <p class="bg-white p-4 rounded-lg mt-2 text-gray-700 shadow"><strong>Mitigation:</strong> Our multi-pronged approach of Dynamic Trust Scoring, AI media verification, and a final manual admin review process ensures a high degree of data reliability.</p>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-semibold text-[#0D47A1]">Challenge: Social Media API Limitations</h3>
+                        <p class="bg-white p-4 rounded-lg mt-2 text-gray-700 shadow"><strong>Mitigation:</strong> We will employ intelligent, keyword-focused data fetching and robust caching mechanisms to optimize API usage, manage costs, and stay within rate limits.</p>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-semibold text-[#0D47A1]">Challenge: User Adoption in Remote Communities</h3>
+                        <p class="bg-white p-4 rounded-lg mt-2 text-gray-700 shadow"><strong>Mitigation:</strong> The app will be gamified, offered in multiple regional languages, and promoted through partnerships with local authorities to build trust and drive adoption.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="impact" class="bg-[#0D47A1] text-white rounded-xl shadow-2xl p-12">
+                <h2 class="text-3xl font-bold text-center mb-10">A Multi-Faceted Positive Impact</h2>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-10 text-center">
+                    <div>
+                        <div class="text-6xl mb-4">❤️</div>
+                        <h3 class="text-2xl font-bold mb-2">Social</h3>
+                        <p>Saves lives by delivering faster, more accurate ground-truth information to responders and targeted alerts to citizens.</p>
+                    </div>
+                    <div>
+                        <div class="text-6xl mb-4">💰</div>
+                        <h3 class="text-2xl font-bold mb-2">Economic</h3>
+                        <p>Reduces economic losses by enabling timely protection of critical infrastructure, property, and livelihoods like fishing.</p>
+                    </div>
+                    <div>
+                        <div class="text-6xl mb-4">🌿</div>
+                        <h3 class="text-2xl font-bold mb-2">Environmental</h3>
+                        <p>Facilitates a quicker, more effective response to environmental hazards like oil spills or marine debris events reported by citizens.</p>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <footer class="text-center py-8 mt-12 text-gray-500">
+            <p>&copy; 2025 Project Samudra Sachet - SIH 2025 Submission</p>
+        </footer>
+
     </div>
 
-    <!-- Toast Notification -->
-    <div id="toast" class="fixed bottom-10 right-10 bg-green-500 text-white py-3 px-6 rounded-lg shadow-lg hidden fade-in">
-        <p id="toast-message"></p>
-    </div>
-
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        const pendingPickListsContainer = document.getElementById('pending-pick-lists');
-        const completedPickListsContainer = document.getElementById('completed-pick-lists');
-        const pendingCountEl = document.getElementById('pending-count');
-        const completedCountEl = document.getElementById('completed-count');
-        const overallProgressEl = document.getElementById('overall-progress');
-        const addPickListBtn = document.getElementById('addPickListBtn');
-
-        // Modal elements
-        const modal = document.getElementById('pickListModal');
-        const closeModalBtn = document.getElementById('closeModalBtn');
-        const modalTitle = document.getElementById('modal-title');
-        const modalContent = document.getElementById('modal-content');
-        const completePickListBtn = document.getElementById('completePickListBtn');
-        
-        // Toast elements
-        const toast = document.getElementById('toast');
-        const toastMessage = document.getElementById('toast-message');
-
-        let pickLists = [
-            { id: 1, title: 'PL-001', line: 'Production Line A', items: [
-                { name: 'Material X', tray: 'T-101', rack: 'R1-A', picked: false },
-                { name: 'Material Y', tray: 'T-102', rack: 'R1-B', picked: false },
-                { name: 'Material Z', tray: 'T-103', rack: 'R2-C', picked: false },
-            ], status: 'pending' },
-            { id: 2, title: 'PL-002', line: 'Production Line B', items: [
-                { name: 'Material A', tray: 'T-201', rack: 'R1-C', picked: false },
-                { name: 'Material B', tray: 'T-202', rack: 'R3-A', picked: false },
-            ], status: 'pending' },
-            { id: 3, title: 'PL-003', line: 'Production Line A', items: [
-                { name: 'Material C', tray: 'T-301', rack: 'R2-B', picked: false },
-                { name: 'Material D', tray: 'T-302', rack: 'R4-A', picked: false },
-                { name: 'Material E', tray: 'T-303', rack: 'R4-B', picked: false },
-                { name: 'Material F', tray: 'T-304', rack: 'R4-C', picked: false },
-            ], status: 'pending' },
-            { id: 4, title: 'PL-004', line: 'Production Line C', items: [
-                { name: 'Material G', tray: 'T-401', rack: 'R3-B', picked: false },
-            ], status: 'pending' }
-        ];
-
-        let chart;
-
-        function renderPickLists() {
-            pendingPickListsContainer.innerHTML = '';
-            completedPickListsContainer.innerHTML = '';
-
-            const pending = pickLists.filter(pl => pl.status === 'pending');
-            const completed = pickLists.filter(pl => pl.status === 'completed').slice(-5).reverse();
-
-            pending.forEach(pl => {
-                const pickedCount = pl.items.filter(item => item.picked).length;
-                const progress = (pickedCount / pl.items.length) * 100;
-
-                const card = `
-                    <div class="bg-gray-700 p-5 rounded-lg shadow-md cursor-pointer hover:bg-gray-600 transition slide-in-up" data-id="${pl.id}">
-                        <div class="flex justify-between items-start">
-                            <div>
-                                <h4 class="font-bold text-lg">${pl.title}</h4>
-                                <p class="text-sm text-gray-400">${pl.line}</p>
-                            </div>
-                            <span class="bg-yellow-500 text-yellow-900 text-xs font-semibold px-2.5 py-1 rounded-full">Pending</span>
-                        </div>
-                        <div class="mt-4">
-                            <p class="text-sm text-gray-300 mb-2">${pickedCount} of ${pl.items.length} items picked</p>
-                            <div class="w-full bg-gray-600 rounded-full h-2.5">
-                                <div class="bg-indigo-500 h-2.5 rounded-full progress-bar-animated" style="width: ${progress}%"></div>
-                            </div>
-                        </div>
-                    </div>
-                `;
-                pendingPickListsContainer.innerHTML += card;
-            });
-
-            if (pending.length === 0) {
-                 pendingPickListsContainer.innerHTML = `<p class="text-center text-gray-400 col-span-2">No pending pick lists.</p>`;
-            }
-            
-            completed.forEach(pl => {
-                const item = `
-                    <div class="flex items-center justify-between p-3 bg-gray-700 rounded-lg fade-in">
-                        <div class="flex items-center">
-                            <div class="bg-green-500 rounded-full p-2 mr-4">
-                               <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-                            </div>
-                            <div>
-                                <p class="font-semibold">${pl.title}</p>
-                                <p class="text-sm text-gray-400">Completed for ${pl.line}</p>
-                            </div>
-                        </div>
-                        <span class="text-sm text-gray-500">Just now</span>
-                    </div>
-                `;
-                completedPickListsContainer.innerHTML += item;
-            });
-            
-            if (completed.length === 0) {
-                completedPickListsContainer.innerHTML = `<p class="text-center text-gray-500">No completed lists yet.</p>`;
-            }
-
-            updateStats();
-            addCardEventListeners();
-        }
-
-        function updateStats() {
-            const pending = pickLists.filter(pl => pl.status === 'pending').length;
-            const completed = pickLists.filter(pl => pl.status === 'completed').length;
-            const total = pickLists.length;
-
-            pendingCountEl.textContent = pending;
-            completedCountEl.textContent = completed;
-            
-            const progress = total > 0 ? (completed / total) * 100 : 0;
-            overallProgressEl.style.width = `${progress}%`;
-
-            updateChart(pending, completed);
-        }
-
-        function updateChart(pending, completed) {
-            const data = {
-                labels: ['Pending', 'Completed'],
-                datasets: [{
-                    label: 'Pick Lists',
-                    data: [pending, completed],
-                    backgroundColor: [
-                        'rgba(255, 159, 64, 0.7)',
-                        'rgba(75, 192, 192, 0.7)'
-                    ],
-                    borderColor: [
-                        'rgba(255, 159, 64, 1)',
-                        'rgba(75, 192, 192, 1)'
-                    ],
-                    borderWidth: 1
-                }]
-            };
-
-            if (chart) {
-                chart.data.datasets[0].data = [pending, completed];
-                chart.update();
-            } else {
-                 const ctx = document.getElementById('progressChart').getContext('2d');
-                 chart = new Chart(ctx, {
-                    type: 'doughnut',
-                    data: data,
-                    options: {
-                        responsive: true,
-                        plugins: {
-                            legend: {
-                                position: 'top',
-                                labels: {
-                                    color: 'white'
-                                }
-                            },
-                        }
-                    },
-                });
-            }
-        }
-
-        function addCardEventListeners() {
-            document.querySelectorAll('[data-id]').forEach(card => {
-                card.addEventListener('click', () => {
-                    const id = card.getAttribute('data-id');
-                    openModal(parseInt(id));
-                });
-            });
-        }
-        
-        function openModal(id) {
-            const pickList = pickLists.find(pl => pl.id === id);
-            if (!pickList) return;
-
-            modalTitle.textContent = `${pickList.title} - ${pickList.line}`;
-            
-            modalContent.innerHTML = `
-                <div class="space-y-4 max-h-96 overflow-y-auto pr-4">
-                ${pickList.items.map((item, index) => `
-                    <div class="flex items-center justify-between p-4 rounded-lg ${item.picked ? 'bg-green-900' : 'bg-gray-700'}">
-                        <div>
-                            <p class="font-bold text-lg">${item.name}</p>
-                            <p class="text-sm text-gray-400">Tray: ${item.tray} | Rack: ${item.rack}</p>
-                        </div>
-                        <button class="toggle-pick-btn ${item.picked ? 'bg-gray-600' : 'bg-indigo-500 hover:bg-indigo-600'} text-white font-bold py-2 px-4 rounded-lg transition" data-item-index="${index}">
-                            ${item.picked ? 'Un-pick' : 'Pick'}
-                        </button>
-                    </div>
-                `).join('')}
-                </div>
-            `;
-
-            completePickListBtn.dataset.id = id;
-            updateCompleteButtonState(pickList);
-            modal.classList.remove('hidden');
-
-            // Add event listeners to new buttons
-            modal.querySelectorAll('.toggle-pick-btn').forEach(button => {
-                button.addEventListener('click', () => {
-                    const itemIndex = parseInt(button.dataset.itemIndex);
-                    toggleItemPick(id, itemIndex);
-                });
-            });
-        }
-        
-        function closeModal() {
-            modal.classList.add('hidden');
-        }
-
-        function toggleItemPick(pickListId, itemIndex) {
-            const pickList = pickLists.find(pl => pl.id === pickListId);
-            if(pickList) {
-                pickList.items[itemIndex].picked = !pickList.items[itemIndex].picked;
-                openModal(pickListId); // Re-render modal content
-                renderPickLists(); // Re-render main dashboard
-            }
-        }
-        
-        function updateCompleteButtonState(pickList) {
-            const allPicked = pickList.items.every(item => item.picked);
-            completePickListBtn.disabled = !allPicked;
-        }
-
-        closeModalBtn.addEventListener('click', closeModal);
-        modal.addEventListener('click', (e) => {
-            if (e.target === modal) {
-                closeModal();
-            }
-        });
-
-        completePickListBtn.addEventListener('click', () => {
-            const id = parseInt(completePickListBtn.dataset.id);
-            const pickList = pickLists.find(pl => pl.id === id);
-            if (pickList && pickList.items.every(item => item.picked)) {
-                pickList.status = 'completed';
-                closeModal();
-                renderPickLists();
-                showToast(`Pick List ${pickList.title} completed!`);
-            }
-        });
-        
-        addPickListBtn.addEventListener('click', () => {
-            const newId = Math.max(...pickLists.map(p => p.id), 0) + 1;
-            const lines = ['Production Line A', 'Production Line B', 'Production Line C'];
-            const materials = ['Alpha', 'Beta', 'Gamma', 'Delta', 'Epsilon'];
-            
-            const newItemCount = Math.floor(Math.random() * 4) + 1;
-            const newItems = [];
-            for(let i=0; i<newItemCount; i++) {
-                newItems.push({
-                    name: `Material ${materials[Math.floor(Math.random() * materials.length)]}`,
-                    tray: `T-${Math.floor(Math.random() * 899) + 100}`,
-                    rack: `R${Math.floor(Math.random() * 4) + 1}-${String.fromCharCode(65 + Math.floor(Math.random() * 3))}`,
-                    picked: false
-                });
-            }
-
-            const newPickList = {
-                id: newId,
-                title: `PL-${String(newId).padStart(3, '0')}`,
-                line: lines[Math.floor(Math.random() * lines.length)],
-                items: newItems,
-                status: 'pending'
-            };
-            pickLists.push(newPickList);
-            renderPickLists();
-            showToast(`New Pick List ${newPickList.title} added.`);
-        });
-
-        function showToast(message) {
-            toastMessage.textContent = message;
-            toast.classList.remove('hidden');
-            setTimeout(() => {
-                toast.classList.add('hidden');
-            }, 3000);
-        }
-
-        renderPickLists();
-    });
-</script>
-</body>
-</html>
-
-
-
-
-
-
-<!-- <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>INCOIS Hazard Reporter</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
-    <style>
-        .leaflet-container {
-            height: 100%;
-            width: 100%;
-        }
-        [x-cloak] { display: none !important; }
-    </style>
-    <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
     <script>
-        const i18n = {
-            en: {
-                title: "Ocean Guard",
-                language: "Language",
-                offlineMode: "Offline Mode",
-                nav: {
-                    submitReport: "Submit Report",
-                    mapDashboard: "Map Dashboard",
-                    socialFeed: "Social Feed",
-                    adminPanel: "Admin Panel",
-                },
-                reportPage: {
-                    title: "Submit a New Hazard Report",
-                    hazardType: "Hazard Type",
-                    severity: "Severity",
-                    description: "Description",
-                    uploadPhoto: "Upload Photo",
-                    submit: "Submit Report"
-                },
-                mapPage: { title: "Hazard Map Dashboard" },
-                socialPage: { title: "Social Media Feed" },
-                adminPage: { title: "Admin Report Verification" },
-            },
-            hi: {
-                title: "ओशन गार्ड",
-                language: "भाषा",
-                offlineMode: "ऑफलाइन मोड",
-                nav: {
-                    submitReport: "रिपोर्ट जमा करें",
-                    mapDashboard: "मानचित्र डैशबोर्ड",
-                    socialFeed: "सोशल मीडिया फ़ीड",
-                    adminPanel: "एडमिन पैनल",
-                },
-                reportPage: {
-                    title: "एक नई खतरा रिपोर्ट जमा करें",
-                    hazardType: "खतरे का प्रकार",
-                    severity: "गंभीरता",
-                    description: "विवरण",
-                    uploadPhoto: "फोटो अपलोड करें",
-                    submit: "रिपोर्ट जमा करें"
-                },
-                mapPage: { title: "खतरा मानचित्र डैशबोर्ड" },
-                socialPage: { title: "सोशल मीडिया फ़ीड" },
-                adminPage: { title: "एडमिन रिपोर्ट सत्यापन" },
-            },
-            mr: {
-                title: "ओशन गार्ड",
-                language: "भाषा",
-                offlineMode: "ऑफलाइन मोड",
-                nav: {
-                    submitReport: "अहवाल सादर करा",
-                    mapDashboard: "नकाशा डॅशबोर्ड",
-                    socialFeed: "सोशल मीडिया फीड",
-                    adminPanel: "प्रशासक पॅनेल",
-                },
-                reportPage: {
-                    title: "नवीन धोका अहवाल सादर करा",
-                    hazardType: "धोक्याचा प्रकार",
-                    severity: "तीव्रता",
-                    description: "वर्णन",
-                    uploadPhoto: "फोटो अपलोड करा",
-                    submit: "अहवाल सादर करा"
-                },
-                mapPage: { title: "धोका नकाशा डॅशबोर्ड" },
-                socialPage: { title: "सोशल मीडिया फीड" },
-                adminPage: { title: "प्रशासक अहवाल पडताळणी" },
+        const tooltipTitleCallback = (tooltipItems) => {
+            const item = tooltipItems[0];
+            let label = item.chart.data.labels[item.dataIndex];
+            if (Array.isArray(label)) {
+                return label.join(' ');
             }
+            return label;
+        };
+        
+        const chartColors = {
+            blue: '#0D47A1',
+            orange: '#FF6F61',
+            grey: '#4A4A4A',
+            lightBlue: '#64B5F6',
+            yellow: '#FFC107'
         };
 
-        // --- DUMMY BACKEND / MOCK API ---
-        const dummyData = {
-            users: [
-                { id: 1, email: "citizen@example.com", password: "password", role: "Citizen" },
-                { id: 2, email: "official@example.com", password: "password", role: "Official" },
-            ],
-            reports: [
-                { id: 1, userId: 1, location: { lat: 19.0760, lng: 72.8777 }, hazardType: "Coastal Flooding", severity: 4, description: "High tide water logging near Juhu beach entrance.", status: "pending", photo: 'photo1.jpg' },
-                { id: 2, userId: 1, location: { lat: 18.9734, lng: 72.8311 }, hazardType: "Oil Spill", severity: 5, description: "Large patch of dark, oily substance spotted near Worli Sea Face.", status: "verified", photo: 'photo2.jpg' },
-                { id: 3, userId: 2, location: { lat: 19.0213, lng: 72.8424 }, hazardType: "Debris", severity: 3, description: "Illegal dumping of construction debris near Mahim causeway.", status: "pending", photo: 'photo3.jpg' },
-            ],
-            hotspots: [
-                { id: 1, location: { lat: 19.07, lng: 72.87 }, radius: 500, score: 0.8 },
-                { id: 2, location: { lat: 18.98, lng: 72.83 }, radius: 800, score: 0.9 },
-            ],
-            socialPosts: [
-                { id: 1, source: 'Twitter', author: '@mumbai_resident', text: 'The sea is incredibly rough today at Bandstand, waves are crossing the promenade. #MumbaiRains', tags: ['waves', 'mumbairains'], hazardProbability: 0.75, sentiment: -0.6 },
-                { id: 2, source: 'Facebook', author: 'Coastal Watch Group', text: 'Crazy amount of garbage washed up on Versova beach after the high tide this morning.', tags: ['garbage', 'debris', 'high-tide'], hazardProbability: 0.8, sentiment: -0.8 },
-                { id: 3, source: 'Twitter', author: '@fishing_reports', text: 'Looks like an oil slick forming off the coast of Alibag. Concerning.', tags: ['oil-spill', 'pollution'], hazardProbability: 0.9, sentiment: -0.9 },
-            ]
+        const processLabels = (labels) => {
+            return labels.map(label => {
+                if (label.length > 16) {
+                    const words = label.split(' ');
+                    const lines = [];
+                    let currentLine = '';
+                    words.forEach(word => {
+                        if ((currentLine + word).length > 16) {
+                            lines.push(currentLine.trim());
+                            currentLine = '';
+                        }
+                        currentLine += word + ' ';
+                    });
+                    lines.push(currentLine.trim());
+                    return lines;
+                }
+                return label;
+            });
         };
 
-        function hazardReporterApp() {
-            return {
-                // State
-                page: 'map',
-                lang: 'en',
-                offline: false,
-                auth: { loggedIn: true, user: dummyData.users[0] }, // Default to logged in
-                reportForm: { hazardType: 'Coastal Flooding', severity: 3, description: '', photo: null },
-                reports: [],
-                hotspots: [],
-                socialPosts: [],
-                offlineReports: [],
-                map: null,
-                mapFilters: { hazardType: 'All', status: 'All' },
-                notification: { show: false, title: '', message: '', type: 'info' },
-                i18n,
-
-                // Methods
-                init() {
-                    this.reports = [...dummyData.reports];
-                    this.hotspots = [...dummyData.hotspots];
-                    this.socialPosts = [...dummyData.socialPosts];
-
-                    this.$watch('page', (value) => {
-                        if (value === 'map') {
-                            this.$nextTick(() => this.initMap());
-                        }
-                    });
-
-                    // Initial map load since we start on the map page
-                    this.$nextTick(() => this.initMap());
-                },
-                
-                showNotification(title, message, type = 'info', duration = 3000) {
-                    this.notification = { show: true, title, message, type };
-                    setTimeout(() => { this.notification.show = false; }, duration);
-                },
-
-                // --- Navigation ---
-                setPage(newPage) {
-                    this.page = newPage;
-                },
-
-                // --- Report Submission ---
-                submitReport() {
-                    const newReport = {
-                        id: Date.now(),
-                        userId: this.auth.user.id,
-                        location: { lat: 19.05 + Math.random() * 0.1, lng: 72.85 + Math.random() * 0.1 }, // Random location for demo
-                        ...this.reportForm,
-                        status: 'pending'
-                    };
-
-                    if (this.offline) {
-                        this.offlineReports.push(newReport);
-                        this.showNotification("Report Saved Offline", "It will be synced when you go online.", "info");
-                    } else {
-                        this.reports.push(newReport);
-                        this.showNotification("Report Submitted", "Your report has been successfully submitted.", "success");
-                        if (this.page === 'map' && this.map) this.renderMap();
-                    }
-                    
-                    // Reset form
-                    this.reportForm = { hazardType: 'Coastal Flooding', severity: 3, description: '', photo: null };
-                    this.setPage('map');
-                },
-                
-                syncOfflineReports() {
-                    this.reports = [...this.reports, ...this.offlineReports];
-                    this.showNotification("Sync Complete", `${this.offlineReports.length} reports have been synced.`, "success");
-                    this.offlineReports = [];
-                    if (this.page === 'map' && this.map) this.renderMap();
-                },
-
-                // --- Admin ---
-                updateReportStatus(reportId, newStatus) {
-                    const report = this.reports.find(r => r.id === reportId);
-                    if (report) {
-                        report.status = newStatus;
-                         this.showNotification("Status Updated", `Report has been marked as ${newStatus}.`, "success");
-                        if (this.page === 'map' && this.map) this.renderMap();
-                    }
-                },
-                
-                // --- Map ---
-                initMap() {
-                    if (this.map) {
-                        this.map.remove();
-                    }
-                    this.map = L.map('map').setView([19.0760, 72.8777], 11);
-                    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                        attribution: '&copy; OpenStreetMap contributors'
-                    }).addTo(this.map);
-                    this.renderMap();
-                },
-
-                renderMap() {
-                    if (!this.map) return;
-                    
-                    // Clear existing layers
-                    this.map.eachLayer((layer) => {
-                        if (!!layer.toGeoJSON) { // Check if it's a vector layer
-                            this.map.removeLayer(layer);
-                        }
-                    });
-
-                    // Filter reports
-                    const filteredReports = this.reports.filter(report => {
-                        const typeMatch = this.mapFilters.hazardType === 'All' || report.hazardType === this.mapFilters.hazardType;
-                        const statusMatch = this.mapFilters.status === 'All' || report.status === this.mapFilters.status;
-                        return typeMatch && statusMatch;
-                    });
-
-                    // Add report markers
-                    filteredReports.forEach(report => {
-                        const color = report.status === 'verified' ? 'green' : (report.status === 'pending' ? 'orange' : 'red');
-                        const marker = L.marker([report.location.lat, report.location.lng], {
-                             icon: this.createMarkerIcon(color)
-                        }).addTo(this.map);
-                        marker.bindPopup(`<b>${report.hazardType}</b><br>${report.description}<br>Severity: ${report.severity}<br>Status: ${report.status}`);
-                    });
-
-                    // Add hotspot circles
-                    this.hotspots.forEach(hotspot => {
-                        L.circle([hotspot.location.lat, hotspot.location.lng], {
-                            color: 'red',
-                            fillColor: '#f03',
-                            fillOpacity: 0.4,
-                            radius: hotspot.radius
-                        }).addTo(this.map).bindPopup(`<b>Hotspot</b><br>Score: ${hotspot.score}`);
-                    });
-                },
-
-                createMarkerIcon(color) {
-                    const svgIcon = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="${color}" width="32" height="32"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>`;
-
-                    return L.divIcon({
-                        html: svgIcon,
-                        className: '',
-                        iconSize: [32, 32],
-                        iconAnchor: [16, 32],
-                        popupAnchor: [0, -32]
-                    });
+        const hazardDonutCtx = document.getElementById('hazardDonutChart').getContext('2d');
+        new Chart(hazardDonutCtx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Coastal Flooding', 'High Waves', 'Abnormal Tides', 'Tsunami Sighting'],
+                datasets: [{
+                    label: 'Hazard Reports',
+                    data: [45, 25, 20, 10],
+                    backgroundColor: [chartColors.blue, chartColors.orange, chartColors.yellow, chartColors.grey],
+                    borderColor: '#F7F7F7',
+                    borderWidth: 4
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { position: 'bottom' },
+                    tooltip: { callbacks: { title: tooltipTitleCallback } }
                 }
             }
-        }
+        });
+
+        const reportLineCtx = document.getElementById('reportLineChart').getContext('2d');
+        new Chart(reportLineCtx, {
+            type: 'line',
+            data: {
+                labels: ['10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00'],
+                datasets: [{
+                    label: 'Reports per Hour',
+                    data: [5, 12, 8, 45, 90, 65, 30],
+                    borderColor: chartColors.orange,
+                    backgroundColor: 'rgba(255, 111, 97, 0.2)',
+                    fill: true,
+                    tension: 0.4
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: { y: { beginAtZero: true } },
+                plugins: {
+                    legend: { display: false },
+                    tooltip: { callbacks: { title: tooltipTitleCallback } }
+                }
+            }
+        });
+
+        const trustBarCtx = document.getElementById('trustBarChart').getContext('2d');
+        new Chart(trustBarCtx, {
+            type: 'bar',
+            data: {
+                labels: processLabels(['Low Trust (<40)', 'Medium Trust (40-70)', 'High Trust (>70)', 'Verified by Admin']),
+                datasets: [{
+                    label: 'Number of Reports',
+                    data: [22, 58, 120, 85],
+                    backgroundColor: [chartColors.grey, chartColors.yellow, chartColors.lightBlue, chartColors.blue],
+                    borderRadius: 5
+                }]
+            },
+            options: {
+                indexAxis: 'y',
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false },
+                    tooltip: { callbacks: { title: tooltipTitleCallback } }
+                }
+            }
+        });
     </script>
-</head>
-<body class="bg-gray-100 font-sans antialiased">
-    <div id="app" x-data="hazardReporterApp()" x-init="init()" x-cloak>
-        <!-- Main Application UI 
-        <div x-show="auth.loggedIn" class="flex h-screen bg-gray-200">
-            <!-- Sidebar 
-            <aside class="w-64 bg-gray-800 text-white flex flex-col">
-                <div class="p-4 border-b border-gray-700">
-                    <h1 class="text-xl font-bold" x-text="i18n[lang].title"></h1>
-                    <p class="text-sm text-gray-400" x-text="auth.user.role"></p>
-                </div>
-                <nav class="flex-1 px-2 py-4 space-y-2">
-                    <a href="#" @click.prevent="setPage('report')" :class="{'bg-gray-900': page === 'report'}" class="block px-4 py-2 rounded-md hover:bg-gray-700" x-text="i18n[lang].nav.submitReport"></a>
-                    <a href="#" @click.prevent="setPage('map')" :class="{'bg-gray-900': page === 'map'}" class="block px-4 py-2 rounded-md hover:bg-gray-700" x-text="i18n[lang].nav.mapDashboard"></a>
-                    <a href="#" @click.prevent="setPage('social')" :class="{'bg-gray-900': page === 'social'}" class="block px-4 py-2 rounded-md hover:bg-gray-700" x-text="i18n[lang].nav.socialFeed"></a>
-                    <a href="#" x-show="auth.user.role !== 'Citizen'" @click.prevent="setPage('admin')" :class="{'bg-gray-900': page === 'admin'}" class="block px-4 py-2 rounded-md hover:bg-gray-700" x-text="i18n[lang].nav.adminPanel"></a>
-                </nav>
-                <div class="p-4 border-t border-gray-700">
-                    <div class="flex items-center justify-between mb-4">
-                        <label for="language" class="text-sm" x-text="i18n[lang].language"></label>
-                        <select id="language" x-model="lang" class="bg-gray-700 border-gray-600 rounded-md text-sm">
-                            <option value="en">English</option>
-                            <option value="hi">हिंदी</option>
-                            <option value="mr">मराठी</option>
-                        </select>
-                    </div>
-                     <div class="flex items-center justify-between mb-4">
-                        <span class="text-sm" x-text="i18n[lang].offlineMode"></span>
-                        <label class="relative inline-flex items-center cursor-pointer">
-                          <input type="checkbox" x-model="offline" class="sr-only peer">
-                          <div class="w-11 h-6 bg-gray-600 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
-                        </label>
-                    </div>
-                     <button @click.prevent="syncOfflineReports()" x-show="offlineReports.length > 0" class="w-full text-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-green-600 hover:bg-green-700">
-                        Sync <span x-text="offlineReports.length"></span> Reports
-                    </button>
-                </div>
-            </aside>
-
-            <!-- Main Content 
-            <main class="flex-1 p-6 overflow-y-auto">
-                <!-- Citizen Report Form 
-                <div x-show="page === 'report'">
-                    <h2 class="text-2xl font-semibold text-gray-800" x-text="i18n[lang].reportPage.title"></h2>
-                    <div class="mt-4 p-6 bg-white rounded-lg shadow">
-                         <form @submit.prevent="submitReport()">
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                <div>
-                                    <label for="hazardType" class="block text-sm font-medium text-gray-700" x-text="i18n[lang].reportPage.hazardType"></label>
-                                    <select id="hazardType" x-model="reportForm.hazardType" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm rounded-md">
-                                        <option>Coastal Flooding</option>
-                                        <option>Oil Spill</option>
-                                        <option>Debris</option>
-                                        <option>Illegal Fishing</option>
-                                        <option>Other</option>
-                                    </select>
-                                </div>
-                                <div>
-                                    <label for="severity" class="block text-sm font-medium text-gray-700" x-text="i18n[lang].reportPage.severity"></label>
-                                    <div class="flex items-center mt-2">
-                                        <input type="range" id="severity" min="1" max="5" x-model="reportForm.severity" class="w-full">
-                                        <span class="ml-4 font-bold text-blue-600" x-text="reportForm.severity"></span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="mt-6">
-                                <label for="description" class="block text-sm font-medium text-gray-700" x-text="i18n[lang].reportPage.description"></label>
-                                <textarea id="description" x-model="reportForm.description" rows="4" class="mt-1 shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border border-gray-300 rounded-md" required></textarea>
-                            </div>
-                            <div class="mt-6">
-                                <label class="block text-sm font-medium text-gray-700" x-text="i18n[lang].reportPage.uploadPhoto"></label>
-                                <div class="mt-1 flex items-center">
-                                    <span class="inline-block h-12 w-12 rounded-full overflow-hidden bg-gray-100">
-                                        <svg class="h-full w-full text-gray-300" fill="currentColor" viewBox="0 0 24 24">
-                                            <path d="M24 20.993V24H0v-2.997A14.977 14.977 0 0112.004 15c4.904 0 9.26 2.354 11.996 5.993zM16.002 8.999a4 4 0 11-8 0 4 4 0 018 0z" />
-                                        </svg>
-                                    </span>
-                                    <input type="file" id="photoUpload" class="hidden">
-                                    <label for="photoUpload" class="ml-5 bg-white py-2 px-3 border border-gray-300 rounded-md shadow-sm text-sm leading-4 font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 cursor-pointer">
-                                        Select file
-                                    </label>
-                                    <span class="ml-3 text-sm text-gray-500" x-text="reportForm.photo ? 'image_selected.jpg' : 'No file chosen'"></span>
-                                </div>
-                            </div>
-                            <div class="mt-8 text-right">
-                                <button type="submit" class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500" x-text="i18n[lang].reportPage.submit"></button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-
-                <!-- Map Dashboard 
-                <div x-show="page === 'map'" class="h-full flex flex-col">
-                    <div class="flex justify-between items-center mb-4">
-                        <h2 class="text-2xl font-semibold text-gray-800" x-text="i18n[lang].mapPage.title"></h2>
-                        <div class="flex space-x-4">
-                           <select x-model="mapFilters.hazardType" @change="renderMap()" class="rounded-md border-gray-300 shadow-sm">
-                               <option value="All">All Hazard Types</option>
-                               <option>Coastal Flooding</option><option>Oil Spill</option><option>Debris</option>
-                           </select>
-                           <select x-model="mapFilters.status" @change="renderMap()" class="rounded-md border-gray-300 shadow-sm">
-                               <option value="All">All Statuses</option>
-                               <option value="pending">Pending</option><option value="verified">Verified</option>
-                           </select>
-                        </div>
-                    </div>
-                    <div id="map" class="flex-1 bg-white rounded-lg shadow"></div>
-                </div>
-
-                <!-- Social Feed 
-                <div x-show="page === 'social'">
-                    <h2 class="text-2xl font-semibold text-gray-800" x-text="i18n[lang].socialPage.title"></h2>
-                    <div class="mt-4 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-                        <template x-for="post in socialPosts" :key="post.id">
-                            <div class="bg-white rounded-lg shadow p-5">
-                                <div class="flex items-center mb-3">
-                                    <div class="w-10 h-10 rounded-full bg-blue-200 flex items-center justify-center font-bold text-blue-600" x-text="post.author.charAt(0).toUpperCase()"></div>
-                                    <div class="ml-3">
-                                        <p class="font-semibold text-gray-800" x-text="post.author"></p>
-                                        <p class="text-sm text-gray-500" x-text="post.source"></p>
-                                    </div>
-                                </div>
-                                <p class="text-gray-600 mb-3" x-text="post.text"></p>
-                                <div class="flex flex-wrap gap-2">
-                                     <template x-for="tag in post.tags" :key="tag">
-                                        <span class="px-2 py-1 bg-gray-200 text-gray-800 text-xs font-medium rounded-full" x-text="tag"></span>
-                                     </template>
-                                </div>
-                                <div class="mt-4 pt-3 border-t border-gray-200 text-sm text-gray-500 flex justify-between">
-                                    <span>Hazard Prob: <span class="font-bold" x-text="(post.hazardProbability * 100).toFixed(0) + '%'"></span></span>
-                                    <span>Sentiment: <span class="font-bold" x-text="post.sentiment.toFixed(2)"></span></span>
-                                </div>
-                            </div>
-                        </template>
-                    </div>
-                </div>
-
-                <!-- Admin Panel 
-                <div x-show="page === 'admin' && auth.user.role !== 'Citizen'">
-                    <h2 class="text-2xl font-semibold text-gray-800" x-text="i18n[lang].adminPage.title"></h2>
-                    <div class="mt-4 bg-white rounded-lg shadow overflow-hidden">
-                        <table class="min-w-full divide-y divide-gray-200">
-                          <thead class="bg-gray-50">
-                            <tr>
-                              <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Hazard Type</th>
-                              <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Location</th>
-                              <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Severity</th>
-                              <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
-                              <th scope="col" class="relative px-6 py-3"><span class="sr-only">Actions</span></th>
-                            </tr>
-                          </thead>
-                          <tbody class="bg-white divide-y divide-gray-200">
-                            <template x-for="report in reports" :key="report.id">
-                                <tr>
-                                    <td class="px-6 py-4 whitespace-nowrap"><span class="text-sm text-gray-900" x-text="report.hazardType"></span></td>
-                                    <td class="px-6 py-4 whitespace-nowrap"><span class="text-sm text-gray-500" x-text="report.location.lat.toFixed(4) + ', ' + report.location.lng.toFixed(4)"></span></td>
-                                    <td class="px-6 py-4 whitespace-nowrap"><span class="text-sm text-gray-500" x-text="report.severity"></span></td>
-                                    <td class="px-6 py-4 whitespace-nowrap">
-                                        <span :class="{'bg-green-100 text-green-800': report.status === 'verified', 'bg-yellow-100 text-yellow-800': report.status === 'pending', 'bg-red-100 text-red-800': report.status === 'rejected'}" class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full" x-text="report.status"></span>
-                                    </td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                                        <button @click="updateReportStatus(report.id, 'verified')" x-show="report.status !== 'verified'" class="text-green-600 hover:text-green-900">Verify</button>
-                                        <button @click="updateReportStatus(report.id, 'rejected')" x-show="report.status === 'pending'" class="ml-4 text-red-600 hover:text-red-900">Reject</button>
-                                    </td>
-                                </tr>
-                            </template>
-                          </tbody>
-                        </table>
-                    </div>
-                </div>
-                
-                 <!-- Floating notification 
-                <div x-show="notification.show" 
-                    x-transition:enter="transform ease-out duration-300 transition"
-                    x-transition:enter-start="translate-y-2 opacity-0 sm:translate-y-0 sm:translate-x-2"
-                    x-transition:enter-end="translate-y-0 opacity-100 sm:translate-x-0"
-                    x-transition:leave="transition ease-in duration-100"
-                    x-transition:leave-start="opacity-100"
-                    x-transition:leave-end="opacity-0"
-                    class="fixed bottom-5 right-5 w-full max-w-sm bg-white shadow-lg rounded-lg pointer-events-auto ring-1 ring-black ring-opacity-5 overflow-hidden">
-                    <div class="p-4">
-                        <div class="flex items-start">
-                            <div class="flex-shrink-0">
-                                <svg :class="{'text-green-400': notification.type === 'success', 'text-blue-400': notification.type === 'info'}" class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                </svg>
-                            </div>
-                            <div class="ml-3 w-0 flex-1 pt-0.5">
-                                <p class="text-sm font-medium text-gray-900" x-text="notification.title"></p>
-                                <p class="mt-1 text-sm text-gray-500" x-text="notification.message"></p>
-                            </div>
-                            <div class="ml-4 flex-shrink-0 flex">
-                                <button @click="notification.show = false" class="bg-white rounded-md inline-flex text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                                    <span class="sr-only">Close</span>
-                                    <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                                        <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" />
-                                    </svg>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </main>
-        </div>
-    </div>
 </body>
 </html>
- -->
